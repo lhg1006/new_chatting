@@ -3,7 +3,7 @@ const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http, {
     cors: {
-        origin: 'http://61.80.148.189:3000', // 클라이언트의 도메인 주소
+        origin: 'http://192.168.0.152:3000', // 클라이언트의 도메인 주소 ( 집 -> 192.168.0.152   , 회사 61.80.148.189
         methods: ['GET', 'POST'], // 허용할 HTTP 메소드
     },
 });

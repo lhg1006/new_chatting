@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import styles from '@/styles/chat.module.css';
 import {useRouter} from "next/router";
 import {socket} from '@/module/socket';
@@ -48,6 +48,12 @@ const RoomNo = () => {
         }
     }
 
+    const messageContainerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        messageContainerRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [messages]);
+
     return (
         <div>
             <div className={styles.chatContainer}>
@@ -56,6 +62,7 @@ const RoomNo = () => {
                     {messages.map((message, index) => (
                         <div key={index} className={styles.message}>{message}</div>
                     ))}
+                    <div ref={messageContainerRef}></div>
                 </div>
                 <div className={styles.inputContainer}>
                     <input
