@@ -8,46 +8,31 @@ const io = require('socket.io')(http, {
     },
 });
 
-// 채팅방에 접속한 사용자들을 저장할 배열
-let users = [];
-
 // 채팅방에 새로운 사용자가 접속했을 때의 처리
 io.on('connection', (socket) => {
     console.log('새로운 사용자가 접속했습니다.');
 
-    // 사용자의 정보를 저장하고, 다른 사용자들에게 접속 알림을 보냄
-    socket.on('join', (username) => {
-        const user = {
-            id: socket.id,
-            username: username,
-        };
-
-        users.push(user);
-        io.emit('userJoined', user);
+    socket.on('joinRoom', (room) => {
+        console.log('joinRoom', room)
+        socket.join(room);
+        console.log(`사용자가 방 ${room}에 입장했습니다.`);
+        io.to(room).emit('chatMessage', `사용자가 방 ${room}에 입장했습니다.`)
     });
 
-    // 사용자가 채팅 메시지를 보냈을 때의 처리
-    socket.on('message', (message) => {
-        console.log(message)
-        const user = users.find((u) => u.id === socket.id);
-        if (user) {
-            const chatMessage = {
-                user: user,
-                message: message,
-            };
-            io.emit('message', chatMessage);
-        }
+    // 클라이언트로부터 새로운 메시지를 받았을 때
+    socket.on('newMessage', (data) => {
+        const { room, message } = data;
+        console.log(`방 ${room}에서 새로운 메시지: ${message}`);
+
+        // 특정 방에 속한 모든 클라이언트에게 메시지를 방송합니다.
+        io.to(room).emit('chatMessage', message);
     });
 
-    // 사용자가 접속을 종료했을 때의 처리
+    // 연결이 끊겼을 때
     socket.on('disconnect', () => {
-        const userIndex = users.findIndex((u) => u.id === socket.id);
-        if (userIndex !== -1) {
-            const user = users[userIndex];
-            users.splice(userIndex, 1);
-            io.emit('userLeft', user);
-        }
+        console.log('사용자가 연결을 끊었습니다.');
     });
+
 });
 
 // 서버를 시작
