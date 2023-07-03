@@ -3,34 +3,41 @@ import styles from '@/styles/chat.module.css';
 import {useRouter} from "next/router";
 import {socket} from '@/module/socket';
 
-// const socket = io('http://61.80.148.189:3001'); // 채팅 서버 URL
 const RoomNo = () => {
     const router = useRouter()
     const roomNo = router.query.roomNo as string
+    const userNick = localStorage.getItem("user_nick_name")
 
-    const [messages, setMessages] = useState<string[]>([]);
+    const [messages, setMessages] = useState<any[]>([]);
     const [messageInput, setMessageInput] = useState('');
 
     useEffect(() => {
-        connectRoom();
-        // 서버로부터 새로운 메시지를 받았을 때
-        socket.on('chatMessage', (message) => {
-            setMessages((prevMessages) => [...prevMessages, message]);
-        });
+        if(userNick === null){
+            router.push('/chat/list')
+        }else{
+            connectRoom();
+            // 서버로부터 새로운 메시지를 받았을 때
+            socket.on('chatMessage', (message) => {
+                setMessages((prevMessages) => [...prevMessages, message]);
+            });
+        }
         // 컴포넌트 언마운트 시에 소켓 연결을 해제합니다.
         return () => {
             const data = {
                 room: roomNo,
-                message: `사용자가 ${roomNo} 번 방에서 퇴장하였습니다`,
+                message: `님이 ${roomNo} 번 방에서 퇴장하였습니다`,
+                userNick: userNick
             };
             socket.emit('newMessage', data);
         };
     }, [])
 
     const handleSendMessage = () => {
+        const messageText = ` : ${messageInput}`
         const data = {
             room: roomNo,
-            message: messageInput,
+            message: messageText,
+            userNick: userNick
         };
         socket.emit('newMessage', data);
         setMessageInput('');
@@ -38,8 +45,11 @@ const RoomNo = () => {
 
     const connectRoom = () =>{
         if (roomNo) {
-            console.log('join', roomNo)
-            socket.emit('joinRoom', roomNo);
+            const data = {
+                roomNo : roomNo,
+                userNick : userNick
+            }
+            socket.emit('joinRoom', data);
         }
     }
     const onKeyPress = (e : React.KeyboardEvent) => {
@@ -56,11 +66,18 @@ const RoomNo = () => {
 
     return (
         <div>
+            <div>
+                방에있는사람 : 만들예정임
+            </div>
             <div className={styles.chatContainer}>
                 <h1 className={styles.title}>Chat Room {roomNo}</h1>
                 <div className={styles.messageContainer}>
-                    {messages.map((message, index) => (
-                        <div key={index} className={styles.message}>{message}</div>
+                    {messages.map((chatData, index) => (
+                        <div key={index} className={styles.message}>
+                            <span className={styles.userNick}>{chatData?.userNick}</span>
+                            <span>{`${chatData?.message}`}</span>
+                            <div className={styles.line}></div>
+                        </div>
                     ))}
                     <div ref={messageContainerRef}></div>
                 </div>

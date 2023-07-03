@@ -1,0 +1,9 @@
+.footer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    background-color: black;
+    color: whitesmoke;
+    align-items: center;
+    height: 5.8vh;
+}

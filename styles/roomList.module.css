@@ -1,0 +1,26 @@
+.roomListContainer {
+    background-color: #f5f5f5;
+    padding: 20px;
+}
+
+.roomListContainer h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.roomList {
+    list-style-type: none;
+    padding: 0;
+}
+
+.roomList li {
+    cursor: pointer;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    width: 400px;
+    background-color: #eaeaea;
+}
+
+.roomList li:hover {
+    background-color: #d3d3d3;
+}

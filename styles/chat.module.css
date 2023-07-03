@@ -1,21 +1,26 @@
 .chatContainer {
     width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
+    min-width: 420px;
+    max-width: 440px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    height: 70vh;
 }
 
 .title {
+    text-align: center;
     font-size: 24px;
     margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 20px;
 }
 
 .messageContainer {
-    max-height: 200px;
+    min-width: 420px;
+    max-width: 420px;
     overflow-y: auto;
     margin-bottom: 10px;
+    height: 60vh;
 }
 
 .message {
@@ -26,7 +31,11 @@
 
 .inputContainer {
     display: flex;
+    padding-left: 15px;
+    min-width: 420px;
     align-items: center;
+    position: fixed;
+    bottom: 100px;
 }
 
 .inputField {
@@ -38,9 +47,18 @@
 }
 
 .sendButton {
-    padding: 8px 16px;
-    border: none;
+    padding: 4px 12px;
+    border: 2px solid white;
+    border-radius: 20px;
     background-color: #007bff;
     color: #fff;
     cursor: pointer;
+}
+
+.userNick {
+    font-weight: bold;
+}
+
+.line {
+    border-top: 0.5px dashed black;
 }

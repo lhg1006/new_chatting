@@ -1,27 +1,32 @@
-import Header from "@/components/header";
-import Footer from "@/components/footer";
 import {useRouter} from "next/router";
-import {useEffect} from "react";
+import styles from '@/styles/roomList.module.css';
+import {toast} from "react-toastify";
 
 const RoomList = () => {
     const router = useRouter();
-    const onClick = (no: number)=>router.push(`/chat/room/${no}`);
+    const roomClick = (no: number)=> {
+        const userName = localStorage.getItem("user_nick_name");
+        if(userName === null){
+            toast("상단 메뉴! 닉네임 등록!")
+        }else{
+            goChat(no);
+        }
+    }
 
+    const goChat = (no: number) => router.push(`/chat/room/${no}`);
 
     return(
         <>
-            <Header />
-            <div>
-                <div> ROOM LIST </div>
-                <ul>
-                    <li onClick={() => onClick(1)}>room 1</li>
-                    <li onClick={() => onClick(2)}>room 2</li>
-                    <li onClick={() => onClick(3)}>room 3</li>
-                    <li onClick={() => onClick(4)}>room 4</li>
-                    <li onClick={() => onClick(5)}>room 5</li>
+            <div className={styles.roomListContainer}>
+                <h2>ROOM LIST</h2>
+                <ul className={styles.roomList}>
+                    <li onClick={() => roomClick(1)}>room 1</li>
+                    <li onClick={() => roomClick(2)}>room 2</li>
+                    <li onClick={() => roomClick(3)}>room 3</li>
+                    <li onClick={() => roomClick(4)}>room 4</li>
+                    <li onClick={() => roomClick(5)}>room 5</li>
                 </ul>
             </div>
-            <Footer />
         </>
     )
 }
