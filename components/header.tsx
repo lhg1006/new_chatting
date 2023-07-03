@@ -4,14 +4,19 @@ import styles from '@/styles/header.module.css';
 import {useRouter} from "next/router";
 import NickModal from "@/components/nickModal";
 import {useState} from "react";
+import {toast} from "react-toastify";
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
 
     const router = useRouter()
     const headerIco = () => router.push('/chat/list');
-    const loginButton = () => {
+    const openNickModal = () => {
         setIsOpen(!isOpen)
+    }
+    const delNick = () => {
+        localStorage.removeItem("user_nick_name")
+        toast("닉네임 삭제 성공")
     }
     return (
         <>
@@ -24,7 +29,8 @@ const Header = () => {
                             Menu
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                            <Dropdown.Item onClick={loginButton}>닉네임 설정</Dropdown.Item>
+                            <Dropdown.Item onClick={openNickModal}>닉네임 설정</Dropdown.Item>
+                            <Dropdown.Item onClick={delNick}>닉네임 삭제</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </div>

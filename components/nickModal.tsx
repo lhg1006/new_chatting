@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 
 import React, {useEffect, useState} from "react";
+import {toast} from "react-toastify";
 
 
 const NickModal = ({isOpen}: { isOpen: boolean }) => {
@@ -21,7 +22,9 @@ const NickModal = ({isOpen}: { isOpen: boolean }) => {
         }
         // 로컬 스토리지에 닉네임 저장
         localStorage.setItem('user_nick_name', nickname);
+        toast(`닉네임 등록 성공 : ${nickname}`)
         handleClose();
+        setNickname("")
     }
     const handleInputChange = (event : React.ChangeEvent<HTMLInputElement>) => {
         setNickname(event.target.value);
@@ -31,7 +34,7 @@ const NickModal = ({isOpen}: { isOpen: boolean }) => {
         <>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>닉네임을 입력해주세요.</Modal.Title>
+                    <Modal.Title>새로운 닉네임을 입력해주세요.</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <InputGroup size="lg">

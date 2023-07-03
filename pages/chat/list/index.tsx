@@ -7,7 +7,7 @@ const RoomList = () => {
     const roomClick = (no: number)=> {
         const userName = localStorage.getItem("user_nick_name");
         if(userName === null){
-            toast("상단 메뉴! 닉네임 등록!")
+            toast.warning("[필수] 상단 메뉴 닉네임 등록!!!")
         }else{
             goChat(no);
         }

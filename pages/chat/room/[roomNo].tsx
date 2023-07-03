@@ -6,31 +6,53 @@ import {socket} from '@/module/socket';
 const RoomNo = () => {
     const router = useRouter()
     const roomNo = router.query.roomNo as string
-    const userNick = localStorage.getItem("user_nick_name")
 
+    const [userNick, setUserNick] = useState<string>("")
     const [messages, setMessages] = useState<any[]>([]);
-    const [messageInput, setMessageInput] = useState('');
+    const [messageInput, setMessageInput] = useState<string>('');
+    const messageContainerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if(userNick === null){
+        const lsNick = localStorage.getItem("user_nick_name") as string
+        if(lsNick === "" || lsNick === null){
             router.push('/chat/list')
         }else{
+            setUserNick(lsNick)
+        }
+    },[])
+
+    useEffect(() => {
+        if(userNick !== ""){
             connectRoom();
             // 서버로부터 새로운 메시지를 받았을 때
             socket.on('chatMessage', (message) => {
                 setMessages((prevMessages) => [...prevMessages, message]);
             });
-        }
-        // 컴포넌트 언마운트 시에 소켓 연결을 해제합니다.
-        return () => {
-            const data = {
-                room: roomNo,
-                message: `님이 ${roomNo} 번 방에서 퇴장하였습니다`,
-                userNick: userNick
+            // 컴포넌트 언마운트 시에 소켓 연결을 해제합니다.
+            return () => {
+                const data = {
+                    room: roomNo,
+                    message: `님이 ${roomNo} 번 방에서 퇴장하였습니다`,
+                    userNick: userNick
+                };
+                socket.emit('newMessage', data);
             };
-            socket.emit('newMessage', data);
-        };
-    }, [])
+        }
+    }, [userNick])
+
+    useEffect(() => {
+        messageContainerRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [messages]);
+
+    const connectRoom = () =>{
+        if (roomNo) {
+            const data = {
+                roomNo : roomNo,
+                userNick : userNick
+            }
+            socket.emit('joinRoom', data);
+        }
+    }
 
     const handleSendMessage = () => {
         const messageText = ` : ${messageInput}`
@@ -42,32 +64,16 @@ const RoomNo = () => {
         socket.emit('newMessage', data);
         setMessageInput('');
     };
-
-    const connectRoom = () =>{
-        if (roomNo) {
-            const data = {
-                roomNo : roomNo,
-                userNick : userNick
-            }
-            socket.emit('joinRoom', data);
-        }
-    }
     const onKeyPress = (e : React.KeyboardEvent) => {
         if(e.key == 'Enter'){
             handleSendMessage();
         }
     }
 
-    const messageContainerRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        messageContainerRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [messages]);
-
     return (
         <div>
             <div>
-                방에있는사람 : 만들예정임
+                참여 : 만들예정임
             </div>
             <div className={styles.chatContainer}>
                 <h1 className={styles.title}>Chat Room {roomNo}</h1>
