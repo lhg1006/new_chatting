@@ -55,6 +55,7 @@ const RoomNo = () => {
     }
 
     const handleSendMessage = () => {
+        if(messageInput === "") return;
         const messageText = ` : ${messageInput}`
         const data = {
             room: roomNo,
