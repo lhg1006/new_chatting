@@ -99,16 +99,16 @@ const RoomNo = () => {
                     ))}
                     <div ref={messageContainerRef}></div>
                 </div>
-                <div className={styles.inputContainer}>
-                    <input
-                        type="text"
-                        value={messageInput}
-                        onChange={(e) => setMessageInput(e.target.value)}
-                        onKeyPress={onKeyPress}
-                        className={styles.inputField}
-                    />
-                    <button onClick={handleSendMessage} className={styles.sendButton}>Send</button>
-                </div>
+            </div>
+            <div className={styles.inputContainer}>
+                <input
+                    type="text"
+                    value={messageInput}
+                    onChange={(e) => setMessageInput(e.target.value)}
+                    onKeyPress={onKeyPress}
+                    className={styles.inputField}
+                />
+                <button onClick={handleSendMessage} className={styles.sendButton}>Send</button>
             </div>
         </div>
     );

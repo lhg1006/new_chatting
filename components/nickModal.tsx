@@ -20,6 +20,10 @@ const NickModal = ({isOpen}: { isOpen: boolean }) => {
         if(nickname === ""){
             return;
         }
+        if(nickname.length > 6){
+            toast.error("최대 6글자 !!!")
+            return;
+        }
         // 로컬 스토리지에 닉네임 저장
         localStorage.setItem('user_nick_name', nickname);
         toast(`닉네임 등록 성공 : ${nickname}`)

@@ -4,7 +4,7 @@
     max-width: 380px;
     border: 3px solid white;
     border-radius: 20px;
-    height: 72vh;
+    height: 62vh;
 }
 
 .title {
@@ -35,16 +35,14 @@
     min-width: 380px;
     align-items: center;
     position: fixed;
-    bottom: 100px;
+    bottom: 80px;
 }
 
 .inputField {
     flex-grow: 1;
     padding: 8px;
-    /*border: none;*/
-    /*border-radius: 4px;*/
     margin-right: 10px;
-    border: 3px solid white;
+    border: 2px solid black;
     border-radius: 20px;
 }
 
@@ -72,6 +70,7 @@
     padding: 10px;
     overflow: auto;
     margin-bottom: 5px;
+    min-height: 10vh;
     max-height: 10vh;
 }
 
@@ -81,5 +80,6 @@
 }
 
 .userListUL > li {
-    flex: 0 0 33.33%;
+    margin-right: 0px;
+    flex: 0 0 50%;
 }
