@@ -4,18 +4,18 @@ import {toast} from "react-toastify";
 
 const RoomList = () => {
     const router = useRouter();
-    const roomClick = (no: number)=> {
+    const roomClick = (no: number) => {
         const userName = localStorage.getItem("user_nick_name");
-        if(userName === null){
+        if (userName === null) {
             toast.warning("[필수] 상단 메뉴 닉네임 등록!!!")
-        }else{
+        } else {
             goChat(no);
         }
     }
 
     const goChat = (no: number) => router.push(`/chat/room/${no}`);
 
-    return(
+    return (
         <>
             <div className={styles.roomListContainer}>
                 <h2>ROOM LIST</h2>

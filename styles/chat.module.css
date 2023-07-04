@@ -1,10 +1,10 @@
 .chatContainer {
     width: 100%;
-    min-width: 420px;
-    max-width: 440px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    height: 70vh;
+    min-width: 380px;
+    max-width: 380px;
+    border: 3px solid white;
+    border-radius: 20px;
+    height: 72vh;
 }
 
 .title {
@@ -16,11 +16,11 @@
 }
 
 .messageContainer {
-    min-width: 420px;
-    max-width: 420px;
+    min-width: 370px;
+    max-width: 370px;
     overflow-y: auto;
     margin-bottom: 10px;
-    height: 60vh;
+    height: 55vh;
 }
 
 .message {
@@ -32,7 +32,7 @@
 .inputContainer {
     display: flex;
     padding-left: 15px;
-    min-width: 420px;
+    min-width: 380px;
     align-items: center;
     position: fixed;
     bottom: 100px;
@@ -41,15 +41,18 @@
 .inputField {
     flex-grow: 1;
     padding: 8px;
-    border: none;
-    border-radius: 4px;
+    /*border: none;*/
+    /*border-radius: 4px;*/
     margin-right: 10px;
+    border: 3px solid white;
+    border-radius: 20px;
 }
 
 .sendButton {
     padding: 4px 12px;
     border: 2px solid white;
     border-radius: 20px;
+    margin-right: 10px;
     background-color: #007bff;
     color: #fff;
     cursor: pointer;
@@ -61,4 +64,22 @@
 
 .line {
     border-top: 0.5px dashed black;
+}
+
+.userListWrapper {
+    border: 3px solid white;
+    border-radius: 20px;
+    padding: 10px;
+    overflow: auto;
+    margin-bottom: 5px;
+    max-height: 10vh;
+}
+
+.userListUL {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.userListUL > li {
+    flex: 0 0 33.33%;
 }

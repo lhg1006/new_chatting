@@ -4,6 +4,8 @@
     gap: 100px;
     background-color: black;
     padding-top: 10px;
+    min-height: 7vh;
+    max-height: 7vh;
 }
 
 .item1 {
