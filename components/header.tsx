@@ -5,18 +5,25 @@ import {useRouter} from "next/router";
 import NickModal from "@/components/nickModal";
 import {useState} from "react";
 import {toast} from "react-toastify";
+import axios from "axios";
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
-
     const router = useRouter()
     const headerIco = () => router.push('/chat/list');
     const openNickModal = () => {
-        setIsOpen(!isOpen)
+        setIsOpen(true)
     }
-    const delNick = () => {
-        localStorage.removeItem("user_nick_name")
-        toast("닉네임 삭제 성공")
+    const delNick = async () => {
+        const nickname = localStorage.getItem("user_nick_name")
+        const result = await axios.post(`/api/nickApi/del`, {nickname: nickname})
+        console.log(result)
+        if(result.data.res == 1){
+            localStorage.removeItem("user_nick_name")
+            toast("[성공] : 닉네임 삭제 완료")
+        }else{
+            toast("[실패] : ERROR")
+        }
     }
     return (
         <>
@@ -35,7 +42,7 @@ const Header = () => {
                     </Dropdown>
                 </div>
             </div>
-            <NickModal isOpen={isOpen}/>
+            <NickModal isOpen={isOpen} setIsOpen={setIsOpen}/>
         </>
     )
 }

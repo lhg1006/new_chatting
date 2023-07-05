@@ -1,0 +1,57 @@
+.header {
+    font-weight: bold;
+    font-size: 50px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.inputBoxWrap {
+    display: inline-grid;
+    font-family: Bahnschrift;
+}
+.inputBoxWrap > label {
+    margin-top: 20px;
+}
+.inputBoxWrap > input{
+    border: 1px solid whitesmoke;
+    border-radius: 10px;
+    background-color: white;
+    padding: 15px;
+}
+.buttonWrap {
+    display: inline-grid;
+}
+.buttonWrap :hover {
+    cursor: pointer;
+    background-color: #4e886f;
+}
+.buttonWrap > a {
+    margin-top: 15px;
+    text-align: center;
+    margin-right: 15px;
+    border-radius: 10px;
+    border: 1px solid whitesmoke;
+    background-color: #198754;
+    min-width: 100px;
+    padding: 5px;
+}
+
+.buttonWrap > a > span {
+    color: whitesmoke;
+}
+
+.duplicateBtnWrap{
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    border: 1px solid white;
+    border-radius: 10px;
+    background-color: dimgray;
+}
+.duplicateBtnWrap > a > span{
+    color: white;
+}
+
+.available {
+    background-color: dodgerblue !important;
+}
