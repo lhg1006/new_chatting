@@ -1,11 +1,23 @@
 import {useRouter} from "next/router";
 import styles from '@/styles/roomList.module.css';
 import {toast} from "react-toastify";
+import {getCookie} from '@/module/cookieUtil'
+import {useEffect} from "react";
 
 const RoomList = () => {
     const router = useRouter();
+    const userId = getCookie("userId")
+    const userNick = getCookie("userNick")
+
+    useEffect(()=> {
+        if(userId == null || userNick == null){
+            router.replace('/account/login')
+            toast('로그인 하세욤')
+        }
+    },[])
+
     const roomClick = (no: number) => {
-        const userName = localStorage.getItem("user_nick_name");
+        const userName = getCookie("userNick")
         if (userName === null) {
             toast.warning("[필수] 상단 메뉴 닉네임 등록!!!")
         } else {

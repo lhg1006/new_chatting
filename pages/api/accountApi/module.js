@@ -18,7 +18,6 @@ export const accountCheck = async (data) =>{
 }
 
 export const accountIns = async (data) => {
-    console.log(data)
     const connection = await pool.getConnection();
     const {id, pw, nick} = data;
     const accountInsResult = await connection.query('INSERT INTO next_chatting.users (user_id, user_pw, nickname) VALUES(?,?,?)',[id, pw, nick]);
@@ -26,4 +25,11 @@ export const accountIns = async (data) => {
     console.log(accountInsResult);
 
     return accountInsResult[0].affectedRows;
+}
+
+export const userInfo = async (data) => {
+    const connection = await pool.getConnection();
+    const accountInsResult = await connection.query('SELECT user_id as userId , nickname as userNick FROM next_chatting.users WHERE user_id = (?)',[data]);
+    connection.release();
+    return accountInsResult[0][0];
 }

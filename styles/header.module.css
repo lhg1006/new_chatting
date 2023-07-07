@@ -8,6 +8,13 @@
     max-height: 7vh;
 }
 
+.dropDownItemBox{
+    inset: 0 0 auto -60px !important;
+}
+.dropDownItem {
+    border-bottom: 1px solid black;
+}
+
 .item1 {
     color: #198754;
     justify-self: start; /* 첫 번째 아이템을 가로 축 시작점에 정렬 */

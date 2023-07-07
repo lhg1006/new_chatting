@@ -62,10 +62,11 @@ const SignIn = () => {
             return toast("닉네임은 두글자 2상 2삼")
         }
         const available = await axios.get(`/api/accountApi/chkNick?nick=${nick}`)
-        if(available.data.res){
-            setChkNick(true)
+        const { res } = available.data
+        if(res){
+            setChkNick(res)
         }else{
-            setChkNick(false)
+            setChkNick(res)
         }
         toast(`${available.data.message}`)
     }

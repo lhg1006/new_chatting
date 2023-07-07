@@ -2,11 +2,23 @@ import React, {useState, useEffect, useRef} from 'react';
 import styles from '@/styles/chat.module.css';
 import {useRouter} from "next/router";
 import {socket} from '@/module/socket';
+import {getCookie} from "@/module/cookieUtil";
+import {toast} from "react-toastify";
 
 const RoomNo = () => {
     const router = useRouter()
-    const roomNo = router.query.roomNo as string
+    const cookieUserId = getCookie("userId")
+    const cookieUserNick = getCookie("userNick")
 
+    useEffect(()=> {
+        if(cookieUserId == null || cookieUserNick == null){
+            router.replace('/account/login')
+            toast('로그인 하세욤')
+        }
+        return;
+    },[])
+
+    const roomNo = router.query.roomNo as string
     const [userNick, setUserNick] = useState<string>("")
     const [roomUsers, setRoomUsers] = useState([]);
     const [messages, setMessages] = useState<any[]>([]);
@@ -14,11 +26,11 @@ const RoomNo = () => {
     const messageContainerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        const lsNick = localStorage.getItem("user_nick_name") as string
-        if (lsNick === "" || lsNick === null) {
+        const nickname = getCookie('userNick')
+        if (nickname === null) {
             router.push('/chat/list')
         } else {
-            setUserNick(lsNick)
+            setUserNick(nickname)
         }
     }, [router])
 
@@ -93,7 +105,7 @@ const RoomNo = () => {
                     {messages.map((chatData, index) => (
                         <div key={index} className={styles.message}>
                             <span className={styles.userNick}>{chatData?.userNick}</span>
-                            <span>{`${chatData?.message}`}</span>
+                            <span dangerouslySetInnerHTML={{__html: `${chatData?.message}`}}></span>
                             <div className={styles.line}></div>
                         </div>
                     ))}

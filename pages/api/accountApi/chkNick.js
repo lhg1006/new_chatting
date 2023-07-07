@@ -9,9 +9,9 @@ export default async function handler(req, res) {
 
     try {
         if(nick != null){
-            const response = await nickDuplicateCheck(nick);
-            if (response === 0) {
-                resData.res = true;
+            const isDuplicate = await nickDuplicateCheck(nick);
+            if (!isDuplicate) {
+                resData.res = !isDuplicate;
                 resData.message = "[성공] : 사용 가능";
             }
         }

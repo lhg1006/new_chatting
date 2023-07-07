@@ -3,6 +3,7 @@ import style from '@/styles/login.module.css'
 import axios from "axios";
 import {useRouter} from "next/router";
 import {toast} from "react-toastify";
+import {setCookie} from "@/module/cookieUtil";
 
 const Login = () => {
     const router = useRouter()
@@ -19,7 +20,9 @@ const Login = () => {
         const data = {id,pw}
         const ok = await axios.post(`/api/accountApi/login`, {data})
         if(ok.data.res == 1){
-            router.push('/chat/list')
+            await setCookie({cName : 'userId' , cValue: ok.data.userId})
+            await setCookie({cName : 'userNick' , cValue: ok.data.userNick})
+            await router.push('/chat/list')
             toast(`${ok.data.message}`)
         }else{
             toast(`${ok.data.message}`)

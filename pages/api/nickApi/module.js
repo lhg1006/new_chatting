@@ -8,12 +8,13 @@ export const deleteNick = async (nickname) =>{
     return deleteResult[0].affectedRows;
 }
 
-export const nicknameInsert = async (nickname) => {
+export const updateNickname = async (data) => {
+    const {newNick, userId} = data
     const connection = await pool.getConnection();
-    const insertResult = await connection.query('INSERT INTO next_chatting.nickname (nickname) VALUES (?)', [nickname]);
+    const insertResult = await connection.query('UPDATE next_chatting.users SET nickname = (?) WHERE user_id = (?)', [newNick, userId]);
     connection.release();
 
-    return insertResult;
+    return insertResult[0].affectedRows;
 }
 
 export const nicknameList = async () => {
@@ -26,8 +27,8 @@ export const nicknameList = async () => {
 
 export const nickDuplicateCheck = async (nick) => {
     const connection = await pool.getConnection();
-    const nickDuplicateCheckResult = await connection.query('SELECT COUNT(*) as cnt FROM next_chatting.nickname WHERE nickname = (?)', [nick])
+    const nickDuplicateCheckResult = await connection.query('SELECT COUNT(*) as cnt FROM next_chatting.users WHERE nickname = (?)', [nick])
     connection.release();
-
-    return nickDuplicateCheckResult[0][0].cnt;
+    const { cnt } = nickDuplicateCheckResult[0][0]
+    return cnt !== 0;
 }

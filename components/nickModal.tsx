@@ -6,11 +6,11 @@ import axios from 'axios';
 
 import React, {Dispatch, useState} from "react";
 import {toast} from "react-toastify";
+import {getCookie, updCookie} from "@/module/cookieUtil";
 
 
 const NickModal = ({isOpen, setIsOpen}: { isOpen: boolean; setIsOpen: Dispatch<any> }) => {
     const [nickname, setNickname] = useState('');
-    const [error, setError] = useState('');
 
     const handleClose = () => setIsOpen(false);
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,8 +18,6 @@ const NickModal = ({isOpen, setIsOpen}: { isOpen: boolean; setIsOpen: Dispatch<a
     };
 
     const saveChanges = async () => {
-        const result = await axios.post(`/api/nickApi/set`, {nickname: nickname})
-        console.log(result)
         if (nickname === "") {
             return;
         }
@@ -27,14 +25,22 @@ const NickModal = ({isOpen, setIsOpen}: { isOpen: boolean; setIsOpen: Dispatch<a
             toast.error("최대 6글자 !!!")
             return;
         }
+
+        const param = {
+            newNick: nickname,
+            userId: getCookie('userId')
+        }
+
+        const result = await axios.post(`/api/nickApi/set`, {param})
+
         if(result.data.res == 1){
+            await updCookie({cName:'userNick', cValue:param.newNick})
             // 닉네임 저장 성공
-            localStorage.setItem('user_nick_name', nickname);
-            toast(`${result.data.message}${nickname}`)
+            toast(`${result.data.message}`)
             handleClose();
             setNickname("")
         }else{
-            toast(`${result.data.message}${nickname}`)
+            toast(`${result.data.message}`)
         }
     }
 
@@ -57,10 +63,10 @@ const NickModal = ({isOpen, setIsOpen}: { isOpen: boolean; setIsOpen: Dispatch<a
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
-                        Close
+                        닫기
                     </Button>
                     <Button variant="primary" onClick={saveChanges}>
-                        Save Changes
+                        바꾸기
                     </Button>
                 </Modal.Footer>
             </Modal>
