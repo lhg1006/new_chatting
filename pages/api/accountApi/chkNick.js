@@ -1,15 +1,15 @@
-import {idDuplicateCheck} from "./module";
+import {nickDuplicateCheck} from "../nickApi/module";
 
 export default async function handler(req, res) {
-    const { id } = req.query;
+    const { nick } = req.query;
     const resData = {
         res: false,
-        message: "[실패] : 이미 있는 아이디",
+        message: "[실패] : 이미 있는 닉네임",
     };
 
     try {
-        if(id != null){
-            const response = await idDuplicateCheck(id);
+        if(nick != null){
+            const response = await nickDuplicateCheck(nick);
             if (response === 0) {
                 resData.res = true;
                 resData.message = "[성공] : 사용 가능";

@@ -55,3 +55,10 @@
 .available {
     background-color: dodgerblue !important;
 }
+.errorMessage {
+    margin-top: 15px;
+    justify-self: center;
+}
+.error{
+    border-color : #ff000057;
+}

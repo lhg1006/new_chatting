@@ -1,9 +1,10 @@
 import pool from "/db";
 
-export const idDuplicateCheck = async (data) => {
+export const idDuplicateCheck = async (id) => {
     const connection = await pool.getConnection();
-    const idDuplicateCheckResult = await connection.query('SELECT COUNT(*) as cnt FROM next_chatting.users WHERE user_id = (?)', [data])
+    const idDuplicateCheckResult = await connection.query('SELECT COUNT(*) as cnt FROM next_chatting.users WHERE user_id = (?)', [id])
     connection.release();
+
     return idDuplicateCheckResult[0][0].cnt;
 }
 

@@ -23,3 +23,11 @@ export const nicknameList = async () => {
 
     return  rows.map(row => row.nickname);
 }
+
+export const nickDuplicateCheck = async (nick) => {
+    const connection = await pool.getConnection();
+    const nickDuplicateCheckResult = await connection.query('SELECT COUNT(*) as cnt FROM next_chatting.nickname WHERE nickname = (?)', [nick])
+    connection.release();
+
+    return nickDuplicateCheckResult[0][0].cnt;
+}
