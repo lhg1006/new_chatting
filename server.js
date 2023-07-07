@@ -64,8 +64,19 @@ io.on('connection', (socket) => {
 
     // 클라이언트로부터 새로운 메시지를 받았을 때
     socket.on('newMessage', (data) => {
-        const { room, message, userNick } = data;
+        let { room, message, userNick } = data;
         console.log(`방 ${room}에서 새로운 메시지 [${userNick}]: ${message}`);
+
+        if(message.includes("onerror") || message.includes("onload") || message.includes("function")
+            || message.includes("oncanplay") || message.includes("setInterval") || message.includes("setTimeout")
+            || message.includes("document.") || message.includes("() =>") || message.includes("()=>")
+            || message.includes("onplaying") || message.includes("event()") || message.includes("event ()")
+            || message.includes("onprogress") || message.includes("autoplay") || message.includes("eve")
+            || message.includes("fixed") || message.includes("f1xed") || message.includes("mouse")){
+            message = " : 나는 바보다"
+        }else if (message.includes("absolute")){
+            message = " : 나는 바보다이슨공기청정기"
+        }
 
         // 해당 방의 접속자 목록을 클라이언트에게 전달
         io.to(room).emit('roomUsers', roomUsers[room]);
