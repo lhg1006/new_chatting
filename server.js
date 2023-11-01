@@ -1,13 +1,17 @@
+const rateLimit = require('express-rate-limit');
 const express = require('express');
 const app = express();
 const http = require('http').createServer(app);
-const domain = process.env.NEXT_PUBLIC_DOMAIN;
+const serverHost = 'http://61.80.148.189';
+const serverPort = '4000'
 const io = require('socket.io')(http, {
     cors: {
-        origin: 'http://61.80.148.189:4000', // 올바른 클라이언트 도메인 주소로 변경
+        origin: `${serverHost}:${serverPort}`,
         methods: ['GET', 'POST'], // 허용할 HTTP 메소드
     },
 });
+// const cors = require('cors');
+// app.use(cors()); // CORS 미들웨어 추가
 
 // 방 접속자 목록을 저장할 객체
 const roomUsers = {};
@@ -96,8 +100,24 @@ io.on('connection', (socket) => {
 
 });
 
-// 서버를 시작
-const port = 4001;
-http.listen(port, () => {
-    console.log(`서버가 ${port} 포트에서 실행 중입니다.`);
+// 서버를 시작 (Socket.IO 서버는 4001 포트)
+const socketServerPort = 4001;
+http.listen(socketServerPort, () => {
+    console.log(`Socket.IO 서버가 ${socketServerPort} 포트에서 실행 중입니다.`);
 });
+
+// API를 받는 서버 (Express.js 애플리케이션)는 4000 포트
+const apiServerPort = 4002;
+app.listen(apiServerPort, () => {
+    console.log(`API 서버가 ${apiServerPort} 포트에서 실행 중입니다.`);
+});
+
+// rate limit 설정
+const requestLimitMiddleware = rateLimit({
+    windowMs: 60 * 1000, // 1분 동안의 제한
+    max: 5, // 1분 동안 허용되는 최대 요청 횟수
+});
+
+app.use(requestLimitMiddleware);
+
+// 추가적인 라우트 및 미들웨어 설정 ...

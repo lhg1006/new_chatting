@@ -1,8 +1,8 @@
 import React, {useState, useEffect, useRef} from 'react';
 import styles from '@/styles/chat.module.css';
 import {useRouter} from "next/router";
-import {socket} from '@/module/socket';
-import {getCookie} from "@/module/cookieUtil";
+import {socketUtil} from '@/utils/socketUtil';
+import {getCookie} from "@/utils/cookieUtil";
 import {toast} from "react-toastify";
 
 const RoomNo = () => {
@@ -38,7 +38,7 @@ const RoomNo = () => {
         if (userNick !== "") {
             connectRoom();
             // 서버로부터 새로운 메시지를 받았을 때
-            socket.on('chatMessage', (message) => {
+            socketUtil.on('chatMessage', (message) => {
                 setMessages((prevMessages) => [...prevMessages, message]);
             });
 
@@ -48,14 +48,14 @@ const RoomNo = () => {
                     roomNo: roomNo,
                     userNick: userNick
                 };
-                socket.emit('leaveRoom', data)
+                socketUtil.emit('leaveRoom', data)
             };
         }
     }, [userNick])
 
     useEffect(() => {
         // 서버로부터 방 접속자 목록을 받아올 때
-        socket.on('roomUsers', (users) => {
+        socketUtil.on('roomUsers', (users) => {
             setRoomUsers(users);
         });
         console.log(roomUsers)
@@ -68,7 +68,7 @@ const RoomNo = () => {
                 roomNo: roomNo,
                 userNick: userNick
             }
-            socket.emit('joinRoom', data);
+            socketUtil.emit('joinRoom', data);
         }
     }
 
@@ -80,7 +80,7 @@ const RoomNo = () => {
             message: messageText,
             userNick: userNick
         };
-        socket.emit('newMessage', data);
+        socketUtil.emit('newMessage', data);
         setMessageInput('');
     };
     const onKeyPress = (e: React.KeyboardEvent) => {

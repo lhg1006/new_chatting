@@ -2,7 +2,7 @@ import styles from '@/styles/footer.module.css'
 import {FiArrowLeft} from "react-icons/fi";
 import {useRouter} from "next/router";
 import {toast} from "react-toastify";
-import {delCookie, getCookie} from "@/module/cookieUtil";
+import {delCookie, getCookie} from "@/utils/cookieUtil";
 import {showConfirmation} from "@/components/showConfirmation";
 import {useEffect, useState} from "react";
 

@@ -1,7 +1,7 @@
 import {useRouter} from "next/router";
 import styles from '@/styles/roomList.module.css';
 import {toast} from "react-toastify";
-import {getCookie} from '@/module/cookieUtil'
+import {getCookie} from '@/utils/cookieUtil'
 import {useEffect} from "react";
 
 const RoomList = () => {

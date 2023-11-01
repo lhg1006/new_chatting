@@ -6,7 +6,7 @@ import axios from 'axios';
 
 import React, {Dispatch, useState} from "react";
 import {toast} from "react-toastify";
-import {getCookie, updCookie} from "@/module/cookieUtil";
+import {getCookie, updCookie} from "@/utils/cookieUtil";
 
 
 const NickModal = ({isOpen, setIsOpen}: { isOpen: boolean; setIsOpen: Dispatch<any> }) => {

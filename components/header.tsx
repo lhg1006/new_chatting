@@ -5,7 +5,7 @@ import {useRouter} from "next/router";
 import NickModal from "@/components/nickModal";
 import {useEffect, useState} from "react";
 import {toast} from "react-toastify";
-import {delCookie} from "@/module/cookieUtil";
+import {delCookie} from "@/utils/cookieUtil";
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false)

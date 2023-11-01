@@ -22,7 +22,6 @@ export const accountIns = async (data) => {
     const {id, pw, nick} = data;
     const accountInsResult = await connection.query('INSERT INTO next_chatting.users (user_id, user_pw, nickname) VALUES(?,?,?)',[id, pw, nick]);
     connection.release();
-    console.log(accountInsResult);
 
     return accountInsResult[0].affectedRows;
 }

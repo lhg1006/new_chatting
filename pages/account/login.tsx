@@ -3,7 +3,7 @@ import style from '@/styles/login.module.css'
 import axios from "axios";
 import {useRouter} from "next/router";
 import {toast} from "react-toastify";
-import {setCookie} from "@/module/cookieUtil";
+import {setCookie} from "@/utils/cookieUtil";
 
 const Login = () => {
     const router = useRouter()
