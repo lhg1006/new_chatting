@@ -2,7 +2,7 @@ import pool from "/db";
 
 export const deleteNick = async (nickname) =>{
     const connection = await pool.getConnection();
-    const deleteResult = await connection.query('DELETE FROM next_chatting.nickname WHERE nickname = (?) LIMIT 1', [nickname]);
+    const deleteResult = await connection.query('DELETE FROM new_chatting.nickname WHERE nickname = (?) LIMIT 1', [nickname]);
     connection.release();
 
     return deleteResult[0].affectedRows;
@@ -11,7 +11,7 @@ export const deleteNick = async (nickname) =>{
 export const updateNickname = async (data) => {
     const {newNick, userId} = data
     const connection = await pool.getConnection();
-    const insertResult = await connection.query('UPDATE next_chatting.users SET nickname = (?) WHERE user_id = (?)', [newNick, userId]);
+    const insertResult = await connection.query('UPDATE new_chatting.users SET nickname = (?) WHERE user_id = (?)', [newNick, userId]);
     connection.release();
 
     return insertResult[0].affectedRows;
@@ -19,7 +19,7 @@ export const updateNickname = async (data) => {
 
 export const nicknameList = async () => {
     const connection = await pool.getConnection();
-    const [rows, fields] = await connection.query('SELECT nickname FROM next_chatting.nickname');
+    const [rows, fields] = await connection.query('SELECT nickname FROM new_chatting.nickname');
     connection.release();
 
     return  rows.map(row => row.nickname);
@@ -27,7 +27,7 @@ export const nicknameList = async () => {
 
 export const nickDuplicateCheck = async (nick) => {
     const connection = await pool.getConnection();
-    const nickDuplicateCheckResult = await connection.query('SELECT COUNT(*) as cnt FROM next_chatting.users WHERE nickname = (?)', [nick])
+    const nickDuplicateCheckResult = await connection.query('SELECT COUNT(*) as cnt FROM new_chatting.users WHERE nickname = (?)', [nick])
     connection.release();
     const { cnt } = nickDuplicateCheckResult[0][0]
     return cnt !== 0;

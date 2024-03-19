@@ -2,7 +2,7 @@ const rateLimit = require('express-rate-limit');
 const express = require('express');
 const app = express();
 const http = require('http').createServer(app);
-const serverHost = 'http://61.80.148.189';
+const serverHost = 'http://192.168.0.201';
 const serverPort = '4000'
 const io = require('socket.io')(http, {
     cors: {
