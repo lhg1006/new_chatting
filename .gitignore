@@ -58,3 +58,5 @@ next-env.d.ts
 
 package-lock.json
 
+.env
+db.js

@@ -2,7 +2,7 @@ const rateLimit = require('express-rate-limit');
 const express = require('express');
 const app = express();
 const http = require('http').createServer(app);
-const serverHost = 'http://192.168.0.201';
+const serverHost = process.env.NEXT_PUBLIC_ENV_HOST;
 const serverPort = '4000'
 const io = require('socket.io')(http, {
     cors: {
@@ -77,9 +77,9 @@ io.on('connection', (socket) => {
             || message.includes("onplaying") || message.includes("event()") || message.includes("event ()")
             || message.includes("onprogress") || message.includes("autoplay") || message.includes("eve")
             || message.includes("fixed") || message.includes("f1xed") || message.includes("mouse")){
-            message = " : 나는 바보다"
+            message = " : "
         }else if (message.includes("absolute")){
-            message = " : 나는 바보다이슨공기청정기"
+            message = " : "
         }
 
         // 해당 방의 접속자 목록을 클라이언트에게 전달
